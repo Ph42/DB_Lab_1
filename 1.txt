@@ -1,0 +1,62 @@
+create table t_measure
+(
+	id_measure int not null,
+	name varchar2(4) not null,
+	constraint pk_measure 
+		primary key (id_measure)
+);
+
+create table t_material
+(
+	id_material int not null,
+	name varchar2(100) not null,
+	id_measure int not null,
+	constraint pk_material 
+		primary key (id_material),
+	constraint fk_material_measure 
+		foreign key (id_measure)
+		references t_measure(id_measure)
+);
+
+create table t_inprice
+(
+	id_inprice int not null,
+	id_material int,
+	price_date date not null,
+	price number(10,2) check (price >= 0),
+	constraint fk_inprice_material 
+		foreign key (id_material)
+		references t_material(id_material)
+		on delete cascade
+);
+---------------------------
+
+
+---------------------------
+alter table t_employer
+add sex char(1) default 'M' check(sex in ('M','W'))
+add birthdate date
+add marriage varchar2(10);
+
+alter table t_surplus
+add store_date date
+add constraint pk_surplus
+	primary key (id_store, id_material);
+
+create table t_job
+(
+	id_job int not null,
+	name varchar2(30),
+	constraint pk_job
+		primary key (id_job)
+);
+
+alter table t_employer
+add id_job int
+add constraint fk_employer_job
+	foreign key (id_job)
+	references t_job(id_job)
+	on delete set null;
+
+alter table t_measure
+	modify (name varchar2(5));

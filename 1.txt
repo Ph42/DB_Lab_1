@@ -31,6 +31,35 @@ create table t_inprice
 );
 ---------------------------
 
+create table t_store
+(
+	id_store int not null,
+	name varchar2(20) not null,
+	constraint pk_store
+		primary key (id_store)
+);
+
+create table t_caterer
+(
+	id_caterer int not null,
+	name varchar2 not null,
+	constraint pk_caterer
+		primary key (id_caterer)
+);
+
+create table t_surplus
+(
+	id_surplus int not null
+	id_material int not null
+	id_store int not null
+	volume float(2) 
+	constraint pk_surplus
+		primary key (id_surplus)
+	constraint fk_surplus_material
+		foreign key (id_material)
+		references t_material(id_material)
+	constraint fk_surplus_store
+);
 
 ---------------------------
 alter table t_employer
@@ -60,3 +89,4 @@ add constraint fk_employer_job
 
 alter table t_measure
 	modify (name varchar2(5));
+-----------------------------

@@ -59,6 +59,8 @@ create table t_surplus
 		foreign key (id_material)
 		references t_material(id_material)
 	constraint fk_surplus_store
+		foreign key	(id_store)
+		references t_store(id_store)
 );
 
 ---------------------------

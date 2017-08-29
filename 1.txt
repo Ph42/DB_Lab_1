@@ -15,7 +15,7 @@ create table t_material
 		primary key (id_material),
 	constraint fk_material_measure 
 		foreign key (id_measure)
-		references t_measure(id_measure),
+		references t_measure(id_measure)
 );
 
 create table t_inprice
@@ -27,7 +27,7 @@ create table t_inprice
 	constraint fk_inprice_material 
 		foreign key (id_material)
 		references t_material(id_material)
-		on delete cascade,
+		on delete cascade
 );
 ---------------------------
 -- Задание 1
@@ -37,18 +37,18 @@ create table t_store
 	id_store int not null,
 	name varchar2(20) not null,
 	constraint pk_store
-		primary key (id_store),
+		primary key (id_store)
 );
 
 create table t_caterer
 (
 	id_caterer int not null,
-	name varchar2 not null,
-	address varchar2,
-	fax number(100),
-	phone number(100),
+	name varchar2(50) not null,
+	address varchar2(150),
+	fax varchar2(50),
+	phone varchar2(50),
 	constraint pk_caterer
-		primary key (id_caterer),
+		primary key (id_caterer)
 );
 
 create table t_surplus
@@ -56,7 +56,7 @@ create table t_surplus
 	id_surplus int not null,
 	id_material int not null,
 	id_store int not null,
-	volume number(,2),
+	volume number(15,2),
 	constraint pk_surplus
 		primary key (id_surplus),
 	constraint fk_surplus_material
@@ -65,7 +65,7 @@ create table t_surplus
 		on delete cascade,
 	constraint fk_surplus_store
 		foreign key	(id_store)
-		references t_store(id_store),
+		references t_store(id_store)
 );
 
 create table t_supply
@@ -75,7 +75,7 @@ create table t_supply
 	id_material int not null,
 	id_store int not null,
 	supply_date date,
-	volume float(2),
+	volume number(15,2),
 	constraint pk_supply
 		primary key (id_supply),
 	constraint fk_supply_caterer
@@ -89,7 +89,7 @@ create table t_supply
 	constraint fk_supply_store
 		foreign key (id_store)
 		references t_store(id_store)
-		on delete cascade,
+		on delete cascade
 );
 
 create table t_employee
@@ -99,7 +99,7 @@ create table t_employee
 	name varchar2(20) not null,
 	father_name varchar2(25),
 	constraint pk_employee
-		primary key (id_employee),
+		primary key (id_employee)
 );
 
 create table t_section	--Цех
@@ -111,7 +111,7 @@ create table t_section	--Цех
 		primary key (id_section),
 	constraint fk_section_employee
 		foreign key (id_employee)
-		references t_employee(id_employee),
+		references t_employee(id_employee)
 );
 
 create table t_deliver
@@ -131,7 +131,7 @@ create table t_deliver
 		references t_material(id_material),
 	constraint fk_deliver_store
 		foreign key (id_store)
-		references t_store(id_store),
+		references t_store(id_store)
 );
 
 
@@ -143,15 +143,15 @@ alter table t_employee
 
 alter table t_surplus
 	add store_date date
-	add constraint pk_surplus
-		primary key (id_store, id_material);	--А что на счёт t_surplus(id_surplus) - теперь значения могут повторяться?
+	add constraint unq1_surplus
+		unique (id_store, id_material);	--А что на счёт t_surplus(id_surplus) - теперь значения могут повторяться?
 
 create table t_job
 (
 	id_job int not null,
 	name varchar2(30),
 	constraint pk_job
-		primary key (id_job),
+		primary key (id_job)
 );
 
 alter table t_employee
@@ -167,21 +167,22 @@ alter table t_measure
 --Задания 2 - 5
 ------------------------
 alter table t_caterer
-	drop column address
-	add legal_address varchar2
-	add actual_address varchar2
+	drop column address;
+alter table t_caterer
+	add legal_address varchar2(150)
+	add actual_address varchar2(150)
 	add email varchar2(254);
 
 alter table t_inprice
-	add constraint pk_inprice
-		primary key (id_material, price_date);
+	add constraint unq1_inprice
+		unique (id_material, price_date);
 
 create table t_group
 (
 	id_group int not null,
 	name varchar2(30),
 	constraint pk_group
-		primary key (id_group),
+		primary key (id_group)
 );
 
 alter table t_material
@@ -195,8 +196,9 @@ alter table t_material
 --По своей инициативе. Считаю что нужно удалить вторичный ключ t_section(id_employer), вместо него создать вторичный ключ в таблице t_employee, ссылающийся на номер цеха. 
 ---------------------------
 alter table t_section
-	drop constraint fk_section_employee
-	drop column id_employer;
+	drop constraint fk_section_employee;
+alter table t_section
+	drop column id_employee;
 
 alter table t_employee
 	add id_section int

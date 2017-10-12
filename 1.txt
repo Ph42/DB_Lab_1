@@ -246,6 +246,9 @@ alter table t_section	--Цех
 
 alter table t_job
 	modify(name nvarchar2(30));
-	
+
 alter table t_group	
 	modify(name nvarchar2(30));
+
+ALTER TABLE t_job 
+  MODIFY (NAME nvarchar2(100));

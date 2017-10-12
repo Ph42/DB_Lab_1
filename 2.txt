@@ -86,10 +86,10 @@ insert into t_caterer (id_caterer, name, fax, phone, legaladdress, actualaddress
 	values (seq_caterer.nextval, '', , , , ,);
 --create table t_surplus
 insert into t_surplus (id_surplus, id_material, id_store, volume, store_date)
-	values (seq_surplus, , , ,'');
+	values (seq_surplus.nextval, , , ,'');
 --create table t_supply
 insert into t_supply (id_supply, id_caterer, id_material, id_store, supply_date, volume)
-	values (seq_supply, , , ,'',);
+	values (seq_supply.nextval, , , ,'',);
 --create table t_job
 insert into t_job (id_job, name)
 	values (seq_job.nextval, '');
@@ -98,13 +98,15 @@ insert into t_employee (id_employee, surname, name, father_name, sex, birthdate,
 	values (seq_employee.nextval, '', '', '', '', '', '', , );
 --create table t_section	--Цех
 insert into t_section (id_section, name)
-	values (seq_section, '');
+	values (seq_section.nextval, '');
 --create table t_deliver --10
 insert into t_deliver (id_deliver, id_section, id_material, id_store, deliver_date, volume)
-		values (seq_deliver, , , ,'', );
+		values (seq_deliver.nextval, , , ,'', );
 */
 ---------------------------
---Set DateFormat MDY; -- Формат даты (будет принимать и YYYYMMDD и MMDDYYYY)
+--не работает --Set DateFormat MDY; -- Формат даты (будет принимать и YYYYMMDD и MMDDYYYY)
+--Изменение формата дат по умолчанию
+alter session set NLS_DATE_FORMAT='YYYYMMDD';
 
 --Конкретные значения, вставка
 
@@ -121,7 +123,6 @@ insert into t_group (id_group, name)
 	values (seq_group.nextval, 'рулонные'); --1
 insert into t_group (id_group, name)
 	values (seq_group.nextval, 'жидкие'); --2
---Выполнено.Закладка.
 insert into t_group (id_group, name)
 	values (seq_group.nextval, 'крепёжные элементы'); --3
 insert into t_group (id_group, name)
@@ -141,6 +142,7 @@ insert into t_material (id_material, name, id_measure, id_group)
 insert into t_material (id_material, name, id_measure, id_group)
 	values (seq_material.nextval, 'металлочерепица - листы 2 м шир.', 1, 4); --5
 
+
 --create table t_inprice
 insert into t_inprice (id_inprice, id_material, price_date, price)
 	values (seq_inprice.nextval, 1 ,'20170912', 100.50);
@@ -154,7 +156,6 @@ insert into t_inprice (id_inprice, id_material, price_date, price)
 	values (seq_inprice.nextval, 4 ,'20170913', 36);
 insert into t_inprice (id_inprice, id_material, price_date, price)
 	values (seq_inprice.nextval, 2 ,'20170925', 74);
-
 
 
 --create table t_store
@@ -171,42 +172,42 @@ insert into t_store (id_store, name)
 
 
 --create table t_caterer --5
-insert into t_caterer (id_caterer, name, fax, phone, legaladdress, actualaddress, email)
+insert into t_caterer (id_caterer, name, fax, phone, legal_address, actual_address, email)
 	values (seq_caterer.nextval, 'ДомСтоителя', '4587963', '89674828872', 'г. Москва, ул. Трапезная, д. 3', 'г. Москва, ул. Техническая, д. 17', 'domstroitelya@yandex.ru'); --1
-insert into t_caterer (id_caterer, name, fax, phone, legaladdress, actualaddress, email)
-	values (seq_caterer.nextval, 'Бригада А', '9887474',  '89584728648',  'г. Пермь, ул. Невская, д. 5', , 'domstroitelya@yandex.ru'); --2
-insert into t_caterer (id_caterer, name, fax, phone, legaladdress, actualaddress, email)
-	values (seq_caterer.nextval, 'ПМПНСКР', '9866963', '89684728397', 'г. Пермь, ул. Короткая, д. 1', , 'domstroitelya@yandex.ru'); --3
-insert into t_caterer (id_caterer, name, fax, phone, legaladdress, actualaddress, email)
-	values (seq_caterer.nextval, 'ДудсХаус', '7867963', '89456464564', 'г. Кунгур, ул. Металлиста, д. 46', , 'domstroitelya@yandex.ru'); --4
-insert into t_caterer (id_caterer, name, fax, phone, legaladdress, actualaddress, email)
-	values (seq_caterer.nextval, 'Компания СтройСразуНорм', '787963', '89457826587', 'г. Кунгур, ул. Паравозная, д. 73', , 'domstroitelya@yandex.ru'); --5
+insert into t_caterer (id_caterer, name, fax, phone, legal_address, actual_address, email)
+	values (seq_caterer.nextval, 'Бригада А', '9887474',  '89584728648',  'г. Пермь, ул. Невская, д. 5', 'г. Пермь, ул. Невская, д. 5', 'domstroitelya@yandex.ru'); --2
+insert into t_caterer (id_caterer, name, fax, phone, legal_address, actual_address, email)
+	values (seq_caterer.nextval, 'ПМПНСКР', '9866963', '89684728397', 'г. Пермь, ул. Короткая, д. 1', 'г. Пермь, ул. Короткая, д. 1', 'domstroitelya@yandex.ru'); --3
+insert into t_caterer (id_caterer, name, fax, phone, legal_address, actual_address, email)
+	values (seq_caterer.nextval, 'ДудсХаус', '7867963', '89456464564', 'г. Кунгур, ул. Металлиста, д. 46', 'г. Кунгур, ул. Металлиста, д. 46', 'domstroitelya@yandex.ru'); --4
+insert into t_caterer (id_caterer, name, fax, phone, legal_address, actual_address, email)
+	values (seq_caterer.nextval, 'Компания СтройСразуНорм', '787963', '89457826587', 'г. Кунгур, ул. Паравозная, д. 73', 'г. Кунгур, ул. Металлиста, д. 46', 'domstroitelya@yandex.ru'); --5
 
 
 --create table t_surplus
 insert into t_surplus (id_surplus, id_material, id_store, volume, store_date)
-	values (seq_surplus, 2, 2, 966, '20170825');
+	values (seq_surplus.nextval, 2, 2, 966, '20170825');
 insert into t_surplus (id_surplus, id_material, id_store, volume, store_date)
-	values (seq_surplus, 1, 4, 2500, '20170831');
+	values (seq_surplus.nextval, 1, 4, 2500, '20170831');
 insert into t_surplus (id_surplus, id_material, id_store, volume, store_date)
-	values (seq_surplus, 1, 5, 548.5, '20170903');
+	values (seq_surplus.nextval, 1, 5, 548.5, '20170903');
 insert into t_surplus (id_surplus, id_material, id_store, volume, store_date)
-	values (seq_surplus, 3, 1, 247, '20170903');
+	values (seq_surplus.nextval, 3, 1, 247, '20170903');
 insert into t_surplus (id_surplus, id_material, id_store, volume, store_date)
-	values (seq_surplus, 5, 1, 487.3, '20170905');
+	values (seq_surplus.nextval, 5, 1, 487.3, '20170905');
 
 
 --create table t_supply
 insert into t_supply (id_supply, id_caterer, id_material, id_store, supply_date, volume)
-	values (seq_supply, 1, 1, 2,'20170915',600);
+	values (seq_supply.nextval, 1, 1, 2,'20170915',600);
 insert into t_supply (id_supply, id_caterer, id_material, id_store, supply_date, volume)
-	values (seq_supply, 1, 3, 2,'20170915',200);
+	values (seq_supply.nextval, 1, 3, 2,'20170915',200);
 insert into t_supply (id_supply, id_caterer, id_material, id_store, supply_date, volume)
-	values (seq_supply, 2, 2, 2,'20170915',100);
+	values (seq_supply.nextval, 2, 2, 2,'20170915',100);
 insert into t_supply (id_supply, id_caterer, id_material, id_store, supply_date, volume)
-	values (seq_supply, 3, 4, 2,'20170915',2000);
+	values (seq_supply.nextval, 3, 4, 2,'20170915',2000);
 insert into t_supply (id_supply, id_caterer, id_material, id_store, supply_date, volume)
-	values (seq_supply, 5, 1, 2,'20170915',400);
+	values (seq_supply.nextval, 5, 1, 2,'20170915',400);
 
 
 --create table t_job
@@ -221,18 +222,19 @@ insert into t_job (id_job, name)
 insert into t_job (id_job, name)
 	values (seq_job.nextval, 'экономист');
 
+
 --create table t_section	--Цех
 insert into t_section (id_section, name)
-	values (seq_section, 'Изготовление железобетонных блоков');
+	values (seq_section.nextval, 'Изготовление железобетонных блоков');
 insert into t_section (id_section, name)
-	values (seq_section, 'Производство электроинстумента');
+	values (seq_section.nextval, 'Производство электроинстумента');
 insert into t_section (id_section, name)
-	values (seq_section, 'Строительные работы');
+	values (seq_section.nextval, 'Строительные работы');
 insert into t_section (id_section, name)
-	values (seq_section, 'Управление');
+	values (seq_section.nextval, 'Управление');
 insert into t_section (id_section, name)
-	values (seq_section, 'Лаборатория');
-
+	values (seq_section.nextval, 'Лаборатория');
+--Выполнено.Закладка.
 
 --create table t_employee
 insert into t_employee (id_employee, surname, name, father_name, sex, birthdate, marriage, id_job, id_section)
@@ -248,12 +250,12 @@ insert into t_employee (id_employee, surname, name, father_name, sex, birthdate,
 
 --create table t_deliver --10
 insert into t_deliver (id_deliver, id_section, id_material, id_store, deliver_date, volume)
-	values (seq_deliver, 1, 2, 2, '20170917', 50);
+	values (seq_deliver.nextval, 1, 2, 2, '20170917', 50);
 insert into t_deliver (id_deliver, id_section, id_material, id_store, deliver_date, volume)
-	values (seq_deliver, 3, 5, 1, '20170917', 100);
+	values (seq_deliver.nextval, 3, 5, 1, '20170917', 100);
 insert into t_deliver (id_deliver, id_section, id_material, id_store, deliver_date, volume)
-	values (seq_deliver, 4, 1, 1, '20170917', 80);
+	values (seq_deliver.nextval, 4, 1, 1, '20170917', 80);
 insert into t_deliver (id_deliver, id_section, id_material, id_store, deliver_date, volume)
-	values (seq_deliver, 1, 3, 2, '20170917', 200);
+	values (seq_deliver.nextval, 1, 3, 2, '20170917', 200);
 insert into t_deliver (id_deliver, id_section, id_material, id_store, deliver_date, volume)
-	values (seq_deliver, 5, 5, 3, '20170917', 700);
+	values (seq_deliver.nextval, 5, 5, 3, '20170917', 700);

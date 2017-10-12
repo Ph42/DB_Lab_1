@@ -144,7 +144,7 @@ alter table t_employee
 alter table t_surplus
 	add store_date date
 	add constraint unq1_surplus
-		unique (id_store, id_material);	--А что на счёт t_surplus(id_surplus) - теперь значения могут повторяться?
+		unique (id_store, id_material);
 
 create table t_job
 (
@@ -162,7 +162,7 @@ alter table t_employee
 		on delete set null;
 
 alter table t_measure
-	modify (name varchar2(5));
+	modify (name nvarchar2(5));
 -----------------------------
 --Задания 2 - 5
 ------------------------
@@ -193,8 +193,8 @@ alter table t_material
 		on delete set null;
 
 ---------------------------
---По своей инициативе. Считаю что нужно удалить вторичный ключ t_section(id_employer), вместо него создать вторичный ключ в таблице t_employee, ссылающийся на номер цеха. 
----------------------------
+--По своей инициативе. 
+--Считаю что нужно удалить вторичный ключ t_section(id_employer), вместо него создать вторичный ключ в таблице t_employee, ссылающийся на номер цеха. 
 alter table t_section
 	drop constraint fk_section_employee;
 alter table t_section
@@ -207,5 +207,45 @@ alter table t_employee
 		references t_section(id_section)
 		on delete set null;
 
+-- Нужно добавить объем материалов доставленных со склада в цех
+alter table t_deliver
+	add volume number(15,2);
+-- Другие изменения
+alter table t_group
+	modify(name nvarchar2(30));
 -----------------
 -----------------
+
+alter table t_measure
+	modify(name nvarchar2(20));
+
+alter table t_material
+	modify(name nvarchar2(100));
+
+alter table t_store
+	modify(name nvarchar2(20));
+
+alter table t_caterer
+	modify(
+		name nvarchar2(50),
+		legal_address nvarchar2(150),
+		actual_address nvarchar2(150),
+		fax nvarchar2(50),
+		phone nvarchar2(50),
+		email nvarchar2(254));
+
+alter table t_employee
+	modify(
+	surname nvarchar2(50),
+	name nvarchar2(20),
+	father_name nvarchar2(25),
+	marriage nvarchar2(10));
+
+alter table t_section	--Цех
+	modify(name nvarchar2(100));
+
+alter table t_job
+	modify(name nvarchar2(30));
+	
+alter table t_group	
+	modify(name nvarchar2(30));
